@@ -596,18 +596,31 @@ function History({ myEntries, onDelete }) {
 // ─── LEADERBOARD ────────────────────────────────────────────
 function LeaderboardView({ participants, entries, currentUserId }) {
   const todayIdx = getDayIndex();
+  const [expandedUser, setExpandedUser] = useState(null);
+  const [expandedImg, setExpandedImg] = useState(null);
+
   const users = participants.map(p => {
     const pEntries = entries.filter(e => e.participant_id === p.id);
     const total = pEntries.reduce((sum, e) => sum + e.steps, 0);
     const avg = pEntries.length ? Math.round(total / pEntries.length) : 0;
     const todaySteps = pEntries.find(e => e.day_index === todayIdx)?.steps || 0;
     const streak = calcStreak(pEntries);
-    return { ...p, total, avg, todaySteps, streak, loggedDays: pEntries.length };
+    const screenshots = pEntries
+      .filter(e => e.screenshot_url)
+      .sort((a, b) => a.day_index - b.day_index)
+      .map(e => ({ dayIndex: e.day_index, steps: e.steps, url: e.screenshot_url }));
+    return { ...p, total, avg, todaySteps, streak, loggedDays: pEntries.length, screenshots };
   });
   users.sort((a, b) => b.total - a.total);
 
   return (
     <div>
+      {expandedImg && (
+        <div style={s.overlay} onClick={() => setExpandedImg(null)}>
+          <img src={expandedImg} alt="Screenshot" style={{ maxWidth: "100%", maxHeight: "90vh", borderRadius: 16, boxShadow: "0 20px 60px rgba(0,0,0,0.5)" }} />
+        </div>
+      )}
+
       <div style={{ display: "flex", gap: 10, marginBottom: 14 }}>
         <div style={{ flex: 1, borderRadius: 20, padding: "14px 12px", textAlign: "center", background: "linear-gradient(135deg, #F3E5F5 0%, #E8D5F5 100%)" }}>
           <div style={{ fontFamily: "'Outfit', sans-serif", fontSize: 20, fontWeight: 800, color: "#7B1FA2" }}>{users.length}</div>
@@ -620,30 +633,70 @@ function LeaderboardView({ participants, entries, currentUserId }) {
       </div>
 
       {users.map((u, i) => (
-        <div key={u.id} className="fadeIn" style={{
-          ...s.leaderRow,
-          ...(u.id === currentUserId ? { border: "2px solid #C77DDB", background: "rgba(243,229,245,0.5)" } : {}),
-          animationDelay: `${i * 0.05}s`
-        }}>
-          <div style={{ display: "flex", alignItems: "center" }}>
-            <Trophy rank={i + 1} />
-            <div style={{ marginLeft: 10 }}>
-              <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: 15 }}>
-                {u.name}
-                {u.id === currentUserId && <span style={s.meBadge}>sina</span>}
+        <div key={u.id} className="fadeIn" style={{ animationDelay: `${i * 0.05}s` }}>
+          <div
+            style={{
+              ...s.leaderRow,
+              ...(u.id === currentUserId ? { border: "2px solid #C77DDB", background: "rgba(243,229,245,0.5)" } : {}),
+              cursor: u.screenshots.length > 0 ? "pointer" : "default",
+              marginBottom: expandedUser === u.id ? 0 : 8,
+              borderBottomLeftRadius: expandedUser === u.id ? 0 : 20,
+              borderBottomRightRadius: expandedUser === u.id ? 0 : 20,
+            }}
+            onClick={() => u.screenshots.length > 0 && setExpandedUser(expandedUser === u.id ? null : u.id)}
+          >
+            <div style={{ display: "flex", alignItems: "center" }}>
+              <Trophy rank={i + 1} />
+              <div style={{ marginLeft: 10 }}>
+                <div style={{ fontFamily: "'Outfit', sans-serif", fontWeight: 700, fontSize: 15 }}>
+                  {u.name}
+                  {u.id === currentUserId && <span style={s.meBadge}>sina</span>}
+                </div>
+                <div style={{ fontSize: 11, color: "#9B7EC8", marginTop: 1 }}>
+                  {u.loggedDays} päeva · keskmine {formatNumber(u.avg)}/päev
+                  {u.screenshots.length > 0 && (
+                    <span style={{ marginLeft: 6 }}>· 📸 {u.screenshots.length}</span>
+                  )}
+                </div>
               </div>
-              <div style={{ fontSize: 11, color: "#9B7EC8", marginTop: 1 }}>
-                {u.loggedDays} päeva · keskmine {formatNumber(u.avg)}/päev
+            </div>
+            <div style={{ textAlign: "right" }}>
+              <div style={s.statValue}>{formatNumber(u.total)}</div>
+              <div style={{ fontSize: 11, color: "#9B7EC8", marginTop: 2 }}>
+                <span>Täna: {formatNumber(u.todaySteps)}</span>
+                {u.streak > 0 && <span style={{ marginLeft: 8 }}><Flame size={12} /> {u.streak}</span>}
               </div>
             </div>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <div style={s.statValue}>{formatNumber(u.total)}</div>
-            <div style={{ fontSize: 11, color: "#9B7EC8", marginTop: 2 }}>
-              <span>Täna: {formatNumber(u.todaySteps)}</span>
-              {u.streak > 0 && <span style={{ marginLeft: 8 }}><Flame size={12} /> {u.streak}</span>}
+
+          {/* Expandable photo gallery */}
+          {expandedUser === u.id && (
+            <div className="fadeIn" style={{
+              background: "rgba(255,255,255,0.6)", borderBottomLeftRadius: 20, borderBottomRightRadius: 20,
+              padding: "12px 14px 14px", marginBottom: 8,
+              border: "1px solid rgba(232,213,245,0.4)", borderTop: "none",
+            }}>
+              <div style={{ display: "flex", gap: 8, overflowX: "auto", paddingBottom: 4 }}>
+                {u.screenshots.map(sc => (
+                  <div key={sc.dayIndex} style={{ flexShrink: 0, textAlign: "center" }}>
+                    <img
+                      src={sc.url}
+                      alt={`Päev ${sc.dayIndex + 1}`}
+                      onClick={(e) => { e.stopPropagation(); setExpandedImg(sc.url); }}
+                      style={{
+                        width: 90, height: 90, objectFit: "cover", borderRadius: 12,
+                        cursor: "pointer", border: "2px solid #E8D5F5",
+                        transition: "transform 0.2s ease",
+                      }}
+                    />
+                    <div style={{ fontSize: 10, color: "#9B7EC8", marginTop: 4, fontWeight: 600 }}>
+                      P{sc.dayIndex + 1} · {formatNumber(sc.steps)}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       ))}
 
