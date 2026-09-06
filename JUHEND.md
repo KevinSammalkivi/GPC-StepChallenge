@@ -1,107 +1,155 @@
-# 🚀 Step Challenge – Paigaldusjuhend
+# 🚀 Step Challenge – Juhend
 
-## Mida sa vajad
-
-- **GitHub konto** → [github.com](https://github.com)
-- **Supabase konto** → [supabase.com](https://supabase.com) (tasuta)
-- **Vercel konto** → [vercel.com](https://vercel.com) (tasuta, logi GitHubiga sisse)
+**3 nädalat · 7. september – 27. september 2026 · 21 päeva**
 
 ---
 
-## Samm 1: Supabase projekti loomine (~5 min)
+## ⚠️ ENNE ALGUST: vana challenge maha (~3 min)
 
-1. Mine [supabase.com](https://supabase.com) → **Start your project**
-2. Logi sisse GitHubiga
-3. Vajuta **New Project**
-4. Pane nimeks nt `step-challenge`
-5. Vali regiooniks **West EU (Ireland)** (lähim Eestile)
-6. Pane kirja tugev parool → **Create new project**
-7. Oota ~2 min kuni projekt valmib
+Uus hooaeg algab puhtalt lehelt — kõik senised osalejad, PIN-koodid ja sammud kustutatakse.
 
-### Andmebaasi seadistamine
+### 1. Andmebaas
 
-1. Mine vasakult menüüst → **SQL Editor**
-2. Kopeeri kogu `supabase-setup.sql` faili sisu sinna
-3. Vajuta **Run** (roheline nupp)
-4. Peaksid nägema "Success" teadet
+1. Supabase → **SQL Editor**
+2. Kopeeri kogu `supabase-setup.sql` sisu sinna
+3. **Run**
 
-### API võtmete leidmine
+See kustutab vanad tabelid ja ehitab uued (21 päeva + loodusboonuse veerud).
 
-1. Mine vasakult → **Settings** → **API**
-2. Kopeeri need kaks asja ja hoia alles:
-   - **Project URL** (näeb välja nagu `https://xxxxx.supabase.co`)
-   - **anon public** key (pikk tekst `eyJ...` algusega)
+### 2. Vanad pildid Storage'ist
+
+SQL **ei kustuta pilte** — need jäävad 1 GB tasuta kvoodi sisse orvuks vedelema. Käsitsi:
+
+1. Supabase → **Storage** → `screenshots`
+2. Vali kõik failid → **Delete**
+
+### 3. Kontroll
+
+Ava äpp. Sisselogimise ekraanil peab kirjas olema **0 osalejat** ja tekst "Registreeru esimesena".
 
 ---
 
-## Samm 2: GitHub repo loomine (~3 min)
+## 🎯 Reeglid
 
-1. Mine [github.com/new](https://github.com/new)
-2. Repo nimi: `step-challenge`
-3. Jäta **Public** ja vajuta **Create repository**
-4. Oma arvutis ava terminal ja käivita:
+### Punktid
+
+**1 samm = 1 punkt.** Edetabel on üks, aga reaalselt tehtud sammud ja boonused on alati eraldi näha, nii et keegi ei pea arvama, kust punktid tulid. Edetabelit saab sortida nii punktide kui puhaste sammude järgi.
+
+### Päevanorm
+
+**5 000 sammu.** Selle täitmine hoiab seeriat elus. Lävi on tahtlikult madal — mõte on, et keegi ei kukuks mängust välja ühe kiire tööpäeva pärast.
+
+### 🔥 Streak-boonused
+
+**Streak** = järjestikused päevad, kus päevanorm on täis. Ühel inimesel võib challenge'i jooksul olla mitu streak'i.
+
+| Streak | Boonus | Kordused |
+|---|---|---|
+| 3 päeva | +1 500 | uue streak'iga uuesti teenitav |
+| 7 päeva | +4 000 | uue streak'iga uuesti teenitav |
+| 10 päeva | +6 000 | üks kord |
+| 14 päeva | +10 000 | üks kord |
+| **21 päeva** | **+25 000** | üks kord |
+
+Verstapostid on kumulatiivsed: kes teeb kõik 21 päeva, saab **+46 500**.
+
+Jokkerit ei ole — üks vahelejäänud päev katkestab streak'i. Aga 3- ja 7-päevase saab uue streak'iga tagasi teenida, seega ühest eksimusest challenge veel läbi ei saa.
+
+Üks streak teenib iga verstaposti kõige rohkem korra: 21-päevane streak ei maksa 3-päevast boonust seitse korda välja.
+
+### 🌲 Loodusboonus
+
+**+2 000 punkti** matkaraja / RMK raja / looduses käigu eest.
+
+- Max **1 päevas**, kokku **7 korda** kogu challenge'i jooksul
+- Vaja **pilti rajalt** + lühikest kirjeldust, kus käidi
+- Sama päeva sammud peavad olema vähemalt **5 000** ehk päevanorm peab olema täidetud
+
+**Ausussüsteem.** Keegi ei kinnita boonust üle. Küll aga on kõik loodusfotod koos kirjeldusega igaühele edetabelis nähtavad, seega parklafoto paistab välja.
+
+### 🏅 Märgised
+
+Iga märgis läheb ühele inimesele — challenge'i lõpus on mitu võitjat, mitte üks:
+
+| | | |
+|---|---|---|
+| 👟 | **Sammumasin** | Kõige rohkem reaalselt tehtud samme (boonused ei loe) |
+| 📈 | **Suurim areng** | 3. nädala keskmine vs 1. nädala oma |
+| 🌲 | **Metsainimene** | Kõige rohkem loodusboonuseid |
+| 💥 | **Rekordipäev** | Suurim üksik päev |
+| ⚖️ | **Kõige ühtlasem** | Väikseim kõikumine päevade vahel |
+
+"Suurim areng" nõuab vähemalt 3 logitud päeva nii 1. kui 3. nädalas — muidu saaks ühe nõrga avapäevaga arengut võltsida.
+
+"Kõige ühtlasem" nõuab, et vähemalt 3/4 seniseks möödunud päevadest oleks logitud. Muidu võidaks märgise kahe ühesuguse päevaga ja siis vaikimisega. Kes käib iga päev umbes sama tempoga, see võidab; kes vaheldab 20 000 ja 2 000 sammu, ei võida.
+
+---
+
+## ⚙️ Reeglite muutmine
+
+Kõik numbrid on ühes kohas, `src/App.jsx` failis päris alguses:
+
+```js
+const CHALLENGE_START = new Date("2026-09-07");
+const CHALLENGE_DAYS = 21;
+const DAILY_GOAL = 5000;
+const MILESTONES = [ ... ];
+const NATURE_BONUS = 2000;
+const NATURE_MIN_STEPS = 5000;
+const NATURE_MAX = 7;
+```
+
+**NB!** Kui muudad `CHALLENGE_DAYS`, muuda ka andmebaasi piirangut `supabase-setup.sql` failis (`day_index < 21`) — muidu viimaste päevade salvestamine ebaõnnestub.
+
+---
+
+## 🛠 Paigaldus nullist
+
+Kui projekt on juba Vercelis üleval, piisab `git push`-ist. Uue seadistuse jaoks:
+
+### Samm 1: Supabase (~5 min)
+
+1. [supabase.com](https://supabase.com) → **New Project**, regiooniks **West EU (Ireland)**
+2. **SQL Editor** → kleebi `supabase-setup.sql` → **Run**
+3. **Settings → API** → kopeeri **Project URL** ja **anon public** key
+
+### Samm 2: GitHub
 
 ```bash
-# Paki lahti allalaetud step-challenge kaust ja mine sinna
-cd step-challenge
-
-# Git init
 git init
 git add .
-git commit -m "Step Challenge app"
+git commit -m "Step Challenge v3"
 git branch -M main
 git remote add origin https://github.com/SINU-USERNAME/step-challenge.git
 git push -u origin main
 ```
 
-**NB!** Asenda `SINU-USERNAME` oma GitHub kasutajanimega.
+### Samm 3: Vercel (~3 min)
 
----
-
-## Samm 3: Vercel deploy (~3 min)
-
-1. Mine [vercel.com](https://vercel.com) → **Log in with GitHub**
-2. Vajuta **Add New** → **Project**
-3. Vali oma `step-challenge` repo → **Import**
-4. **Environment Variables** sektsioonis lisa need kaks:
+1. [vercel.com](https://vercel.com) → **Add New → Project** → impordi repo
+2. **Environment Variables**:
 
 | Nimi | Väärtus |
 |------|---------|
-| `VITE_SUPABASE_URL` | Sinu Supabase Project URL |
-| `VITE_SUPABASE_ANON_KEY` | Sinu Supabase anon key |
+| `VITE_SUPABASE_URL` | Supabase Project URL |
+| `VITE_SUPABASE_ANON_KEY` | Supabase anon key |
 
-5. Vajuta **Deploy**
-6. Oota ~1 minut...
-7. 🎉 **Sinu äpp on live!** Saad lingi nagu `step-challenge.vercel.app`
+3. **Deploy** → jaga linki grupis 🎉
 
----
+### Kohapeal käivitamine
 
-## Samm 4: Jaga linki community'le! 🎉
-
-Kopeeri oma Verceli link ja jaga seda oma grupis. Igaüks saab:
-- Oma nime sisestada
-- Igapäevaselt samme logida
-- Screenshot'e üles laadida
-- Edetabelit vaadata
+```bash
+npm install && npm run dev
+```
 
 ---
 
 ## Kui midagi ei tööta
 
-### "Supabase error" veateade
-- Kontrolli et `.env` muutujad on Vercelis õigesti seadistatud
-- Kontrolli et SQL script jooksis edukalt läbi
+**"Supabase error"** — kontrolli, et `.env` muutujad on Vercelis olemas ja SQL jooksis lõpuni.
 
-### Pildid ei laadi üles
-- Mine Supabase → **Storage** → kontrolli et `screenshots` bucket on olemas
-- Kui pole, jooksuta SQL uuesti
+**Pilt ei lae üles** — Supabase → Storage → peab olema `screenshots` bucket. Faililagi on 5 MB, lubatud ainult pildid (videod on meelega välja lülitatud, et 1 GB kvoot vastu ei tuleks).
 
-### Tahan domeeni muuta
-- Vercel → Settings → Domains → Lisa oma domeen (nt `steps.sinudomeen.ee`)
+**Viimaste päevade salvestamine ebaõnnestub** — andmebaasis on veel vana `day_index < 14` piirang. Jooksuta `supabase-setup.sql` uuesti.
 
----
-
-## Kasulikud lingid
-
-- Supabase Dashboard: [app.supabase.com](https://app.supabase.com)
-- Vercel Dashboard: [vercel.com/dashboard](https://vercel.com/dashboard)
+**Keegi unustas PIN-i** — Supabase → Table Editor → `participants` → kustuta rida, inimene registreerib uuesti. Sammud lähevad kaasa (cascade), seega tee seda ainult siis, kui ta pole veel midagi loginud.
